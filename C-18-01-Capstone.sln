@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2036
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C-18-01-Capstone.API", "C-18-01-Capstone.API\C-18-01-Capstone.API.csproj", "{CABE2A13-5415-489A-9EC6-D480E82DA3F2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CABE2A13-5415-489A-9EC6-D480E82DA3F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CABE2A13-5415-489A-9EC6-D480E82DA3F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CABE2A13-5415-489A-9EC6-D480E82DA3F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CABE2A13-5415-489A-9EC6-D480E82DA3F2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {44489960-9AF9-4AFF-8F47-3C0939B8AD76}
+	EndGlobalSection
+EndGlobal
