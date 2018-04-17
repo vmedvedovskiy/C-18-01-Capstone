@@ -11,16 +11,11 @@ namespace SocialNetwork.DataContext
     public class Repost
     {
         [Key]
-        public Guid RepostId { get; private set; }
+        public Guid RepostId { get; private set; } = Guid.NewGuid();
         public Guid PostId { get; set; }
         public Guid UserId { get; set; }
 
         [Column(TypeName = "datetime2")]
         public DateTime PublicationData { get; set; }
-
-        public Repost()
-        {
-            this.RepostId = Guid.NewGuid();
-        }
     }
 }

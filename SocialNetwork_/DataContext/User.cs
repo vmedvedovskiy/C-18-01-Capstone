@@ -8,10 +8,10 @@ namespace SocialNetwork.DataContext
     public class User
     {
         [Key]
-        public Guid UserId { get; private  set; }
-        public string FName { get; set; }
+        public Guid UserId { get; private  set; } = Guid.NewGuid();
+        public string FirstName { get; set; }
 
-        public string LName { get; set; }
+        public string LastName { get; set; }
 
         [Column(TypeName = "datetime2")]
         public DateTime BirthDate { get; set; }
@@ -28,10 +28,5 @@ namespace SocialNetwork.DataContext
 
         [ForeignKey("AuthorId")]
         public ICollection<Post> Posts { get; set; }
-
-        public User()
-        {
-            this.UserId = Guid.NewGuid();
-        }
     }
 }
