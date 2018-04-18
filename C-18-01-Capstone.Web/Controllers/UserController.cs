@@ -23,6 +23,12 @@ namespace C_18_01_Capstone.Web.Controllers
         }
 
         [HttpPost]
+        public ActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
         public string Login(LoginViewModel loginViewModel)
         {
           return "Logged in!";
