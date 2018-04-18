@@ -2,6 +2,10 @@
   Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@model C_18_01_Capstone.Web.ViewModels.LoginViewModel
+
+@Styles.Render("~/bundles/login")
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <a class="navbar-brand" href="#">Login</a>
 </nav>
@@ -10,10 +14,13 @@
         <div class="form-group">
             <div class="row">
                 <div class="col-md-2 col-md-offset-2">
-                    @Html.Label("Login", new { @class = "pull-right"})
+                    @Html.LabelFor(m => Model.Login, new { @class = "pull-right"})
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBox("Login", "", new { @class = "form-control" })
+                    @Html.TextBoxFor(m => Model.Login, "", new { @class = "form-control" })
+                </div>
+                <div class="col-md-4">
+                  @Html.ValidationMessageFor(m => Model.Login, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
@@ -26,6 +33,9 @@
                 <div class="col-md-4">
                     @Html.Password("Password", "", new { @class = "form-control" })
                 </div>
+                <div class="col-md-4">
+                  @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                </div>
             </div>
 
         </div>
@@ -36,6 +46,14 @@
                     <input class="btn btn-success form-control" type="submit" value="OK" />
                 </div>
             </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-2 col-md-offset-4">
+              @Html.ActionLink("Register", "Register", "User")
+            </div>
+          </div>
         </div>
     }
 

@@ -286,7 +286,7 @@ namespace C_18_01_Capstone.Main
             FirstName = "Olga",
             LastName = "Mirnaya",
             Login = "post@mail.ua",
-            Password = "newpassword"
+            HashedPassword = "newpassword"
          };
 
 
@@ -296,7 +296,7 @@ namespace C_18_01_Capstone.Main
             FirstName = "Admin",
             LastName = "Admin",
             Login = "post@mail.ua",
-            Password = "root"
+            HashedPassword = "root"
          };
 
 

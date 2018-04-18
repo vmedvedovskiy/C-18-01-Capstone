@@ -40,8 +40,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Repositories\IUserRepository.cs" />
+    <Compile Include="Services\IEncryptionService.cs" />
+    <Compile Include="Services\IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\C-18-01-Capstone.Main\C-18-01-Capstone.Main.csproj">
+      <Project>{4DCDE8F6-8AD2-4F36-A0A5-584C9B68DC1F}</Project>
+      <Name>C-18-01-Capstone.Main</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -21,7 +21,9 @@ namespace C_18_01_Capstone.Main.DataContext
 
         public string Login { get; set; }
 
-        public string Password { get; set; }
+    public string Salt { get; set; }
+
+    public string HashedPassword { get; set; }
 
         [ForeignKey("UserId")]
         public ICollection<UserFriend> Friends { get; set; }
