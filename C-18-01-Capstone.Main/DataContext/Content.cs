@@ -7,11 +7,11 @@ namespace C_18_01_Capstone.Main.DataContext
     public class Content
     {
         [Key]
-        public int TypeContent { get; set; }
+        public int ContentType { get; set; }
 
         public string Name { get; set; }
 
-        [ForeignKey("TypeContent")]
+        [ForeignKey("ContentType")]
         public ICollection<Post> Posts { get; set; }
     }
 }

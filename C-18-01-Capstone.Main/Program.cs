@@ -1,26 +1,27 @@
-﻿using C_18_01_Capstone.Main.DataContext;
+﻿using C_18_01_Capstone.Main.DataAccessLayer;
+using C_18_01_Capstone.Main.DataContext;
 using System;
 using System.Collections.ObjectModel;
 
 namespace C_18_01_Capstone.Main
 {
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            using (SocialNetworkContext context = new SocialNetworkContext())
-            {
-                AddUsers(context);
-                AddCountries(context);
+   class Program
+   {
+      static void Main(string[] args)
+      {
+         using (var context = new SocialNetworkContext())
+         {
+            AddUsers(context);
+            //AddCountries(context);
 
-                context.SaveChanges();
-            }
-        }
+            context.SaveChanges();
+         }
+      }
 
-        private static void AddCountries(SocialNetworkContext context)
-        {
+      private static void AddCountries(SocialNetworkContext context)
+      {
 
-            Collection<Country> collection = new Collection<Country>
+         Collection<Country> collection = new Collection<Country>
             {
                 // This collection built from Wikipedia entry on ISO3166-1 on 9th Feb 2016
 
@@ -274,33 +275,37 @@ namespace C_18_01_Capstone.Main
                 new Country{ Name="Zambia" ,CountryIsoCode2= "ZM" ,CountryIsoCode3 = "ZMB"},
                 new Country{ Name= "Zimbabwe" ,CountryIsoCode2= "ZW" ,CountryIsoCode3 = "ZWE"}
             };
-            context.Countries.AddRange(collection);
-        }
+         context.Countries.AddRange(collection);
+      }
 
-        private static void AddUsers(SocialNetworkContext context)
-        {
-            User user = new User
-            {
-                BirthDate = DateTime.Now,
-                FirstName = "Olga",
-                LastName = "Mirnaya",
-                Login = "post@mail.ua",
-                Password = "newpassword"
-            };
-
-
-            User user1 = new User
-            {
-                BirthDate = DateTime.Now,
-                FirstName = "Admin",
-                LastName = "Admin",
-                Login = "post@mail.ua",
-                Password = "root"
-            };
+      private static void AddUsers(SocialNetworkContext context)
+      {
+         User user = new User
+         {
+            BirthDate = DateTime.Now,
+            FirstName = "Olga",
+            LastName = "Mirnaya",
+            Login = "post@mail.ua",
+            Password = "newpassword"
+         };
 
 
-            context.Users.Add(user);
-            context.Users.Add(user1);
-        }
-    }
+         User user1 = new User
+         {
+            BirthDate = DateTime.Now,
+            FirstName = "Admin",
+            LastName = "Admin",
+            Login = "post@mail.ua",
+            Password = "root"
+         };
+
+
+         var dataAccess = new DataAccess<User>();
+         var dataAccessLoger = new DataAccessLogger<User>(dataAccess);
+
+         dataAccessLoger.AddEntity(user1);
+         dataAccessLoger.AddEntity(user);
+
+      }
+   }
 }

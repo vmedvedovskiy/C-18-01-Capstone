@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace C_18_01_Capstone.Main.DataAccessLayer
 {
-   public class DataAccessLogger<T> : IDataAccess<T> where T : class, new()
+   public class DataAccessLogger<T> : IDataAccess<T> where T : class
    {
       private IDataAccess<T> entity;
       private string path = "DataServiceLog.txt";
-
 
       public DataAccessLogger(IDataAccess<T> entity)
       {
@@ -20,21 +16,21 @@ namespace C_18_01_Capstone.Main.DataAccessLayer
 
       public void AddEntity(T entity)
       {
-         string logString = string.Format("{0}({1})", nameof(this.AddEntity), typeof(T).Name);
-         LogDataStart(logString);
+         string logString = string.Format($"{nameof(this.AddEntity)}({typeof(T).Name})");
+         LogStartOperation(logString);
          this.entity.AddEntity(entity);
-         LogDataEnd(logString);
+         LogEndOperation(logString);
       }
 
       public void DeleteEntity(T entity)
       {
-         string logString = string.Format("{0}({1})", nameof(this.DeleteEntity), typeof(T).Name);
-         LogDataStart(logString);
+         string logString = string.Format($"{nameof(this.DeleteEntity)}({typeof(T).Name})");
+         LogStartOperation(logString);
          this.entity.DeleteEntity(entity);
-         LogDataEnd(logString);
+         LogEndOperation(logString);
       }
 
-      private void LogDataStart(string proccessName)
+      private void LogStartOperation(string proccessName)
       {
          string log = LogString("Starting", proccessName);
 
@@ -44,7 +40,7 @@ namespace C_18_01_Capstone.Main.DataAccessLayer
 
       }
 
-      private void LogDataEnd(string proccessName)
+      private void LogEndOperation(string proccessName)
       {
          string log = LogString("Finishing", proccessName);
 
@@ -55,7 +51,7 @@ namespace C_18_01_Capstone.Main.DataAccessLayer
 
       private string LogString(string state, string proccessName)
       {
-         return string.Format("{0} proccess {1} {2} {3}",
+         return string.Format("{0} proccess {1} {2}{3}",
                         state,
                         proccessName,
                         DateTime.Now.ToString(),
