@@ -31,10 +31,4 @@ namespace C_18_01_Capstone.Main.DataContext
         [ForeignKey("AuthorId")]
         public ICollection<Post> Posts { get; set; }
     }
-
-    public enum Gender
-    {
-        Male,
-        Female
-    }
 }
