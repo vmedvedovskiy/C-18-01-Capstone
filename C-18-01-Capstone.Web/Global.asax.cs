@@ -16,5 +16,12 @@ namespace C_18_01_Capstone.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+
+
+        protected void Application_EndRequest()
+        {   //here breakpoint
+            // under debug mode you can find the exceptions at code: 
+            var result = this.Context.AllErrors;
+        }
     }
 }

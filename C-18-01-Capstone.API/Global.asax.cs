@@ -10,5 +10,6 @@ namespace C_18_01_Capstone.API
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
         }
+
     }
 }

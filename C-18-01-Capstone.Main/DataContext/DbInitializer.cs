@@ -1,30 +1,18 @@
 ﻿using C_18_01_Capstone.Main.DataAccessLayer;
-using C_18_01_Capstone.Main.DataContext;
-using System;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
-namespace C_18_01_Capstone.Main
+namespace C_18_01_Capstone.Main.DataContext
 {
-   class Program
-   {
-      static void Main(string[] args)
-      {
-         using (var context = new SocialNetworkContext())
-         {
-            AddUsers(context);
-            //AddCountries(context);
+    public class DbInitializer
+    {
+        public void InitializeCountriesTable()
+        {
+            DataAccess<Country> dataAccess = new DataAccess<Country>();
 
-            context.SaveChanges();
-         }
-      }
-
-      private static void AddCountries(SocialNetworkContext context)
-      {
-
-         Collection<Country> collection = new Collection<Country>
+            List<Country> countries = new List<Country>
             {
                 // This collection built from Wikipedia entry on ISO3166-1 on 9th Feb 2016
-
+                
                 new Country{ Name="Afghanistan", CountryIsoCode2="AF",CountryIsoCode3= "AFG"},
                 new Country{ Name="Åland Islands", CountryIsoCode2="AX", CountryIsoCode3 ="ALA"},
                 new Country{ Name="Albania", CountryIsoCode2="AL", CountryIsoCode3="ALB" },
@@ -275,37 +263,8 @@ namespace C_18_01_Capstone.Main
                 new Country{ Name="Zambia" ,CountryIsoCode2= "ZM" ,CountryIsoCode3 = "ZMB"},
                 new Country{ Name= "Zimbabwe" ,CountryIsoCode2= "ZW" ,CountryIsoCode3 = "ZWE"}
             };
-         context.Countries.AddRange(collection);
-      }
 
-      private static void AddUsers(SocialNetworkContext context)
-      {
-         User user = new User
-         {
-            BirthDate = DateTime.Now,
-            FirstName = "Olga",
-            LastName = "Mirnaya",
-            Login = "post@mail.ua",
-            HashedPassword = "newpassword"
-         };
-
-
-         User user1 = new User
-         {
-            BirthDate = DateTime.Now,
-            FirstName = "Admin",
-            LastName = "Admin",
-            Login = "post@mail.ua",
-            HashedPassword = "root"
-         };
-
-
-         var dataAccess = new DataAccess<User>();
-         var dataAccessLoger = new DataAccessLogger<User>(dataAccess);
-
-         dataAccessLoger.AddEntity(user1);
-         dataAccessLoger.AddEntity(user);
-
-      }
-   }
+            dataAccess.AddRange(countries);
+        }
+    }
 }

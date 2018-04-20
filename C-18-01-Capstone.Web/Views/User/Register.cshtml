@@ -1,47 +1,65 @@
-﻿
-@{
+﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @model C_18_01_Capstone.Web.ViewModels.UserViewModel
-  
-@using (Html.BeginForm("Register", "User"))
-{
-  <div class="form-group">
-    <div class="row">
-      <div class="col-md-2 col-md-offset-2">
-        @Html.LabelFor(m => Model.Login, new { @class = "pull-right" })
-      </div>
-      <div class="col-md-4">
-        @Html.TextBoxFor(m => Model.Login, "", new { @class = "form-control" })
-      </div>
-      <div class="col-md-4">
-        @Html.ValidationMessageFor(m => Model.Login, "", new { @class = "text-danger" })
-      </div>
-    </div>
-  </div>
 
+@using C_18_01_Capstone.Web.Controllers
+
+@Styles.Render("~/bundles/login")
+
+
+<div class="container">
+    <form action="/User/Register" method="post" class="form-horizontal" data-toggle="validator" role="form">
+        <h2>Registration Form</h2>
         <div class="form-group">
-          <div class="row">
-            <div class="col-md-2 col-md-offset-2">
-              @Html.Label("Password", new { @class = "pull-right" })
+            @Html.LabelFor(m => Model.FirstName, "First name", new { @class = "col-sm-3 control-label" })
+            <div class="col-sm-9">
+                @Html.TextBoxFor(m => Model.FirstName, "", new { placeholder = "First Name", @class = "form-control", autofocus = true, required = true })
             </div>
-            <div class="col-md-4">
-              @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => Model.LastName, "Last name", new { @class = "col-sm-3 control-label" })
+            <div class="col-sm-9">
+                @Html.TextBoxFor(m => Model.LastName, "", new { placeholder = "Last Name", @class = "form-control", autofocus = true, required = true })
             </div>
-            <div class="col-md-4">
-              @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => Model.Login, "Login", new { @class = "col-sm-3 control-label" })
+            <div class="col-sm-9">
+                @Html.TextBoxFor(m => Model.Login, "", new { placeholder = "Login", @class = "form-control", autofocus = true, required = true })
             </div>
-          </div>
-
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => Model.Password, "Password", new { @class = "col-sm-3 control-label" })
+            <div class="col-sm-9">
+                @Html.PasswordFor(m => Model.Password, new { placeholder = "Password", @class = "form-control", autofocus = true, id = "password", required = true })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Password, "Confirm Password", new { @class = "col-sm-3 control-label" })
+            <div class="col-sm-9">
+                @Html.PasswordFor(m => Model.Password, new { placeholder = "Password", @class = "form-control", autofocus = true, id = "confirm_password", required = true })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.BirthDate, "Date of Birth", new { @class = "col-sm-3 control-label" })
+            <div class="col-sm-9">
+                @Html.TextBoxFor(m => Model.BirthDate, new { type = "date", id = "birthDate", @class = "form-control", required = true })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.CountryIso, "Country", new { @class = "col-sm-3 control-label" })
+            <div class="col-sm-9">
+                @Html.DropDownListFor(m => m.CountryIso,
+                new SelectList(HtmlLists.Countries, "CountryIsoCode3", "Name"), new { id = "country", @class = "form-control" })
+            </div>
         </div>
 
         <div class="form-group">
-          <div class="row">
-            <div class="col-md-2 col-md-offset-4">
-              <input class="btn btn-success form-control" type="submit" value="OK" />
+            <div class="col-sm-4 col-sm-offset-3">
+                <input class="btn btn-success form-control" type="submit" value="OK" />
             </div>
-          </div>
         </div>
-}
-
+    </form> 
+</div>

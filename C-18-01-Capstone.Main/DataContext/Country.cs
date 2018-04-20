@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace C_18_01_Capstone.Main.DataContext
 {
@@ -13,7 +14,8 @@ namespace C_18_01_Capstone.Main.DataContext
         public string CountryIsoCode2 { get; set; }
 
         public string Name { get; set; }
-        
+
+        [ForeignKey("CountryId")]
         public ICollection<User> Users { get; set; }
     }
 }
