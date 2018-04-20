@@ -277,7 +277,7 @@ namespace C_18_01_Capstone.Main.DataContext
                 new Country{ Name= "Zimbabwe" ,CountryIsoCode2= "ZW" ,CountryIsoCode3 = "ZWE"}
             };
 
-            dataAccessLogger.AddEntity(countries);
+            dataAccessLogger.AddRange(countries);
         }
     }
 }
