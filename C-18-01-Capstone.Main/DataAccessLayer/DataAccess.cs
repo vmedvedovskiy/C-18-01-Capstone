@@ -23,7 +23,7 @@ namespace C_18_01_Capstone.Main.DataAccessLayer
 
             logger.LogEndOperation(logString);
         }
-        
+
         public void AddRange(IList<T> entities)
         {
             string logString = string.Format($"{nameof(this.AddRange)}({typeof(T).Name})");

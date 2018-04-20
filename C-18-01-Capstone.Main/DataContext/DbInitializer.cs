@@ -5,7 +5,7 @@ namespace C_18_01_Capstone.Main.DataContext
 {
     public class DbInitializer
     {
-        public void  InitializeCountriesTable()
+        public void InitializeCountriesTable()
         {
             DataAccess<Country> dataAccess = new DataAccess<Country>();
 
@@ -263,7 +263,7 @@ namespace C_18_01_Capstone.Main.DataContext
                 new Country{ Name="Zambia" ,CountryIsoCode2= "ZM" ,CountryIsoCode3 = "ZMB"},
                 new Country{ Name= "Zimbabwe" ,CountryIsoCode2= "ZW" ,CountryIsoCode3 = "ZWE"}
             };
-            
+
             dataAccess.AddRange(countries);
         }
     }
