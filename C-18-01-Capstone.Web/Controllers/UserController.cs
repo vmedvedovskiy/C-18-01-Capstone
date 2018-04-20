@@ -3,7 +3,6 @@ using System.Linq;
 using System.Web.Mvc;
 using C_18_01_Capstone.Main.DataAccessLayer;
 using C_18_01_Capstone.Main.DataContext;
-using C_18_01_Capstone.Services.Implementation.Services;
 using C_18_01_Capstone.Services.Services;
 using C_18_01_Capstone.Web.ViewModels;
 
@@ -14,10 +13,12 @@ namespace C_18_01_Capstone.Web.Controllers
         private readonly IEncryptionService encryptionService;
         private readonly IUserService userService;
         
-        public UserController()
+        public UserController(
+            IEncryptionService encryptionService,
+            IUserService userService)
         {
-            encryptionService = new EncryptionService();
-            userService = new UserService();
+            this.encryptionService = encryptionService;
+            this.userService = userService;
         }
 
         // GET: User
@@ -30,7 +31,7 @@ namespace C_18_01_Capstone.Web.Controllers
         [HttpGet]
         public ActionResult Login()
         {
-            return View();
+            return this.View();
         }
 
         [HttpGet]
@@ -46,7 +47,7 @@ namespace C_18_01_Capstone.Web.Controllers
                 Password = "46672754"
             };
 
-            var dataAccess = new DataAccess<Country>();
+            var dataAccess = new EfDataAccess<Country>();
 
             HtmlLists.Countries = dataAccess.GetEntities().OrderBy(_ => _.Name).ToList();
 
@@ -67,26 +68,47 @@ namespace C_18_01_Capstone.Web.Controllers
                     LastName = userViewModel.LastName,
                     CountryId = userViewModel.CountryIso,
                     Salt = salt,
-                    HashedPassword = encryptionService.EncryptPassword(userViewModel.Password,
-                                                salt),
+                    HashedPassword = encryptionService
+                    .EncryptPassword(userViewModel.Password, salt),
                 };
+
                 userService.Add(user);
-                return Login();
             }
             else
             {
                 throw new ApplicationException();
             }
+
+            return this.View();
         }
 
         [HttpPost]
-        public string Login(LoginViewModel loginViewModel)
+        public ActionResult Login(LoginViewModel loginModel)
         {
-            if (ModelState.IsValid)
+            var user = this.userService
+                .FindUser(loginModel.Login);
+
+            if (user == null)
             {
-                return "Logged in!";
+                this.ModelState.AddModelError(
+                    nameof(LoginViewModel.Login),
+                    "User not found");
+
+                return this.View();
             }
-            throw new ApplicationException();
+
+            if(this.encryptionService
+                .EncryptPassword(loginModel.Password, user.Salt)
+                 != user.HashedPassword)
+            {
+                this.ModelState.AddModelError(
+                    nameof(LoginViewModel.Password),
+                    "Password doesn't match");
+
+                return this.View();
+            }
+
+            return this.Redirect("~/Home");
         }
     }
 }

@@ -7,7 +7,7 @@ namespace C_18_01_Capstone.Main.DataContext
     {
         public void InitializeCountriesTable()
         {
-            DataAccess<Country> dataAccess = new DataAccess<Country>();
+            EfDataAccess<Country> dataAccess = new EfDataAccess<Country>();
 
             List<Country> countries = new List<Country>
             {

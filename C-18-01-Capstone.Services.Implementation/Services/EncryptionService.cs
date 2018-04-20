@@ -9,7 +9,7 @@ namespace C_18_01_Capstone.Services.Implementation.Services
     {
         public string CreateSalt()
         {
-            var data = new byte[0x10];
+            var data = new byte[36];
             using (var cryptoServiceProvider = new RNGCryptoServiceProvider())
             {
                 cryptoServiceProvider.GetBytes(data);
