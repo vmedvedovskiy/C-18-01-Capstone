@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using C_18_01_Capstone.Main.DataAccessLayer;
 using C_18_01_Capstone.Main.DataContext;
 using C_18_01_Capstone.Services.Services;
 
@@ -12,7 +13,10 @@ namespace C_18_01_Capstone.Services.Implementation.Services
   {
     public void Add(User user)
     {
-      throw new NotImplementedException();
+            DataAccess<User> dataAccess = new DataAccess<User>();
+            DataAccessLogger<User> dataAccessLogger = new DataAccessLogger<User>(dataAccess);
+
+            dataAccessLogger.AddEntity(user);
     }
   }
 }

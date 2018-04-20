@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using C_18_01_Capstone.Services.Services;
 
 namespace C_18_01_Capstone.Services.Implementation.Services
 {
-  public class EncryptionService : IEncryptionService
+    public class EncryptionService : IEncryptionService
   {
     public string CreateSalt()
     {
