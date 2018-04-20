@@ -5,41 +5,11 @@ using System.Text;
 
 namespace C_18_01_Capstone.Main.DataAccessLayer
 {
-    public class DataAccessLogger<T> : IDataAccess<T> where T : class
+    internal class DataAccessLogger 
     {
-        private IDataAccess<T> entity;
         private string path = "DataServiceLog.txt";
-
-        public DataAccessLogger(IDataAccess<T> entity)
-        {
-            this.entity = entity;
-        }
-
-        public void AddEntity(T entity)
-        {
-            string logString = string.Format($"{nameof(this.AddEntity)}({typeof(T).Name})");
-            LogStartOperation(logString);
-            this.entity.AddEntity(entity);
-            LogEndOperation(logString);
-        }
-
-        public void AddRange(IEnumerable<T> entities)
-        {
-            foreach (var item in entities)
-            {
-                AddEntity(item);
-            }
-        }
-
-        public void DeleteEntity(T entity)
-        {
-            string logString = string.Format($"{nameof(this.DeleteEntity)}({typeof(T).Name})");
-            LogStartOperation(logString);
-            this.entity.DeleteEntity(entity);
-            LogEndOperation(logString);
-        }
-
-        private void LogStartOperation(string proccessName)
+        
+        internal void LogStartOperation(string proccessName)
         {
             string log = LogString("Starting", proccessName);
 
@@ -48,7 +18,7 @@ namespace C_18_01_Capstone.Main.DataAccessLayer
                               Encoding.UTF8);
         }
 
-        private void LogEndOperation(string proccessName)
+        internal void LogEndOperation(string proccessName)
         {
             string log = LogString("Finishing", proccessName);
 
@@ -57,13 +27,10 @@ namespace C_18_01_Capstone.Main.DataAccessLayer
                               Encoding.UTF8);
         }
 
-        private string LogString(string state, string proccessName)
+        internal string LogString(string state, string proccessName)
         {
-            return string.Format("{0} proccess {1} {2}{3}",
-                           state,
-                           proccessName,
-                           DateTime.Now.ToString(),
-                           Environment.NewLine);
+            return string.Format(
+                $"{state} proccess {proccessName} {DateTime.Now.ToString()}{Environment.NewLine}");
         }
     }
 }

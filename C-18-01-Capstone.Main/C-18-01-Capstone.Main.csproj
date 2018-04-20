@@ -57,17 +57,35 @@
     <Compile Include="DataContext\Comment.cs" />
     <Compile Include="DataContext\Content.cs" />
     <Compile Include="DataContext\Country.cs" />
+    <Compile Include="DataContext\DbInitializer.cs" />
     <Compile Include="DataContext\Friend.cs" />
     <Compile Include="DataContext\Like.cs" />
     <Compile Include="DataContext\Post.cs" />
     <Compile Include="DataContext\Repost.cs" />
     <Compile Include="DataContext\SocialNetworkContext.cs" />
     <Compile Include="DataContext\User.cs" />
+    <Compile Include="Migrations\201804190857503_InitialCreate.cs" />
+    <Compile Include="Migrations\201804190857503_InitialCreate.Designer.cs">
+      <DependentUpon>201804190857503_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804201145360_ForeignKeyForCountry.cs" />
+    <Compile Include="Migrations\201804201145360_ForeignKeyForCountry.Designer.cs">
+      <DependentUpon>201804201145360_ForeignKeyForCountry.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201804190857503_InitialCreate.resx">
+      <DependentUpon>201804190857503_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804201145360_ForeignKeyForCountry.resx">
+      <DependentUpon>201804201145360_ForeignKeyForCountry.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

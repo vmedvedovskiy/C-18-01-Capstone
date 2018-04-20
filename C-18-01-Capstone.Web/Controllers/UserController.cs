@@ -49,7 +49,7 @@ namespace C_18_01_Capstone.Web.Controllers
             var dataAccess = new DataAccess<Country>();
 
             HtmlLists.Countries = dataAccess.GetEntities().OrderBy(_ => _.Name).ToList();
-            
+
             return View(userViewModel);
         }
         

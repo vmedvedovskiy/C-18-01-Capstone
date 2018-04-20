@@ -14,9 +14,8 @@ namespace C_18_01_Capstone.Services.Implementation.Services
     public void Add(User user)
     {
             DataAccess<User> dataAccess = new DataAccess<User>();
-            DataAccessLogger<User> dataAccessLogger = new DataAccessLogger<User>(dataAccess);
 
-            dataAccessLogger.AddEntity(user);
+            dataAccess.AddEntity(user);
     }
   }
 }
