@@ -2,6 +2,10 @@
   color: red;
 }
 
+.black {
+    color: black;
+}
+
 body {
     background-color: #eee;
 }
