@@ -1,18 +1,23 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using C_18_01_Capstone.API.Contract;
 using C_18_01_Capstone.Web.ViewModels;
-using Newtonsoft.Json;
+using C_18_01_Capstone.Web.Services;
 
 namespace C_18_01_Capstone.Web.Controllers
 {
     public class UserController : Controller
     {
+        private readonly IApiClient apiClient;
+
+        public UserController(IApiClient apiClient)
+        {
+            this.apiClient = apiClient;
+        }
+
         [HttpGet]
         public ActionResult Index()
         {
@@ -47,22 +52,24 @@ namespace C_18_01_Capstone.Web.Controllers
         public async Task<ActionResult> Register(
             UserViewModel userViewModel)
         {
-            if (ModelState.IsValid)
-            {
-                using (var httpClient = new HttpClient())
-                {
-                    var result = await httpClient
-                        .PostAsync(
-                            "http://localhost:3122/api/v1/users",
-                            CreateApiRequest(userViewModel));
-                }
-            }
-            else
+            if (!ModelState.IsValid)
             {
                 throw new ApplicationException();
             }
 
-            return this.Login();
+            var hasUserCreated = await this.apiClient
+                .CreateUser(this.Convert(userViewModel));
+
+            if (hasUserCreated)
+            {
+                return this.Login();
+            }
+
+            this.ModelState.AddModelError(
+                nameof(UserViewModel.Login),
+                "Something went wrong. Please, try again");
+
+            return await this.Register();
         }
 
         [HttpPost]
@@ -74,30 +81,20 @@ namespace C_18_01_Capstone.Web.Controllers
         private async Task<IReadOnlyList<CountryViewModel>> 
             GetCountries()
         {
-            using (var httpClient = new HttpClient())
-            {
-                var result = await httpClient
-                    .GetAsync("http://localhost:3122/api/v1/countries");
-
-                var content = await result
-                    .Content.ReadAsStringAsync();
-
-                return JsonConvert
-                    .DeserializeObject<List<CountryApiModel>>(content)
-                    .Select(country => new CountryViewModel
-                    {
-                        CountryId = country.CountryId,
-                        Name = country.Name
-                    })
-                    .ToList()
-                    .AsReadOnly();
-            }
+            return (await this.apiClient.GetCountries())
+                .Select(_ => new CountryViewModel
+                {
+                    CountryId = _.CountryId,
+                    Name = _.Name
+                })
+                .ToList()
+                .AsReadOnly();
         }
 
-        private HttpContent CreateApiRequest(
+        private CreateUserApiModel Convert(
             UserViewModel userViewModel)
         {
-            var user = new CreateUserApiModel
+            return new CreateUserApiModel
             {
                 Login = userViewModel.Login,
                 BirthDate = userViewModel.BirthDate,
@@ -106,11 +103,6 @@ namespace C_18_01_Capstone.Web.Controllers
                 CountryId = userViewModel.CountryIso,
                 Password = userViewModel.Password
             };
-
-            return new StringContent(
-                JsonConvert.SerializeObject(user),
-                Encoding.UTF8,
-                "application/json");
         }
     }
 }
