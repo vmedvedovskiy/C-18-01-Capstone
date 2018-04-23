@@ -54,7 +54,7 @@ namespace C_18_01_Capstone.Web.Controllers
                     var result = await httpClient
                         .PostAsync(
                             "http://localhost:3122/api/v1/users",
-                            await CreateApiRequest(userViewModel));
+                            CreateApiRequest(userViewModel));
                 }
             }
             else
@@ -82,20 +82,19 @@ namespace C_18_01_Capstone.Web.Controllers
                 var content = await result
                     .Content.ReadAsStringAsync();
 
-                return await JsonConvert
-                    .DeserializeObjectAsync<List<CountryApiModel>>(content)
-                    .ContinueWith(task =>
-                        task.Result.Select(country => new CountryViewModel
-                        {
-                            CountryId = country.CountryId,
-                            Name = country.Name
-                        })
-                        .ToList()
-                        .AsReadOnly());
+                return JsonConvert
+                    .DeserializeObject<List<CountryApiModel>>(content)
+                    .Select(country => new CountryViewModel
+                    {
+                        CountryId = country.CountryId,
+                        Name = country.Name
+                    })
+                    .ToList()
+                    .AsReadOnly();
             }
         }
 
-        private async Task<HttpContent> CreateApiRequest(
+        private HttpContent CreateApiRequest(
             UserViewModel userViewModel)
         {
             var user = new CreateUserApiModel
@@ -104,13 +103,12 @@ namespace C_18_01_Capstone.Web.Controllers
                 BirthDate = userViewModel.BirthDate,
                 FirstName = userViewModel.FirstName,
                 LastName = userViewModel.LastName,
-                CountryId = userViewModel.CountryIso 
-                    ?? "ALB",
+                CountryId = userViewModel.CountryIso,
                 Password = userViewModel.Password
             };
 
             return new StringContent(
-                await JsonConvert.SerializeObjectAsync(user),
+                JsonConvert.SerializeObject(user),
                 Encoding.UTF8,
                 "application/json");
         }
