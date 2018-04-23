@@ -30,7 +30,7 @@ namespace C_18_01_Capstone.API.Controllers
                 return this.BadRequest("Password is required");
             }
 
-            if (string.IsNullOrEmpty(userToCreate.CountryIso))
+            if (string.IsNullOrEmpty(userToCreate.CountryId))
             {
                 return this.BadRequest("CountryIso is required");
             }
@@ -39,7 +39,7 @@ namespace C_18_01_Capstone.API.Controllers
                 new Services.CreateUserModel
             {
                 BirthDate = userToCreate.BirthDate,
-                CountryIsoCode3 = userToCreate.CountryIso,
+                CountryIsoCode3 = userToCreate.CountryId,
                 FirstName = userToCreate.FirstName,
                 LastName = userToCreate.LastName,
                 Login = userToCreate.Login,

@@ -33,7 +33,15 @@ namespace C_18_01_Capstone.API
                 Lifestyle.Scoped);
 
             container
+                .Register<IDataAccess<Country>, EfDataAccess<Country>>(
+                Lifestyle.Scoped);
+
+            container
                 .Register<IUserService, UserService>(
+                Lifestyle.Scoped);
+
+            container
+                .Register<ICountryService, CountryService>(
                 Lifestyle.Scoped);
 
             container

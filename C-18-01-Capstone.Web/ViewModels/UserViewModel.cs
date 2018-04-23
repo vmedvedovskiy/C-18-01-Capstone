@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace C_18_01_Capstone.Web.ViewModels
 {
@@ -15,5 +16,8 @@ namespace C_18_01_Capstone.Web.ViewModels
         public string Login { get; set; }
         
         public string Password { get; set; }
+
+        public IReadOnlyList<CountryViewModel> 
+            Countries { get; set; }
   }
 }

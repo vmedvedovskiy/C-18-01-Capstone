@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,20 +26,23 @@ namespace C_18_01_Capstone.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult Register()
+        public async Task<ActionResult> Register()
         {
+            var countries = this.GetCountries();
+
             var userViewModel = new UserViewModel
             {
                 BirthDate = DateTime.Now,
                 FirstName = "Mihail",
                 LastName = "Ivanov",
                 Login = "loginName",
-                Password = "46672754"
+                Password = "46672754",
+                Countries = await this.GetCountries()
             };
 
             return View(userViewModel);
         }
-        
+
         [HttpPost]
         public async Task<ActionResult> Register(
             UserViewModel userViewModel)
@@ -57,13 +62,37 @@ namespace C_18_01_Capstone.Web.Controllers
                 throw new ApplicationException();
             }
 
-            return this.View();
+            return this.Login();
         }
 
         [HttpPost]
         public ActionResult Login(LoginViewModel loginModel)
         {
             return this.View();
+        }
+
+        private async Task<IReadOnlyList<CountryViewModel>> 
+            GetCountries()
+        {
+            using (var httpClient = new HttpClient())
+            {
+                var result = await httpClient
+                    .GetAsync("http://localhost:3122/api/v1/countries");
+
+                var content = await result
+                    .Content.ReadAsStringAsync();
+
+                return await JsonConvert
+                    .DeserializeObjectAsync<List<CountryApiModel>>(content)
+                    .ContinueWith(task =>
+                        task.Result.Select(country => new CountryViewModel
+                        {
+                            CountryId = country.CountryId,
+                            Name = country.Name
+                        })
+                        .ToList()
+                        .AsReadOnly());
+            }
         }
 
         private async Task<HttpContent> CreateApiRequest(
@@ -75,7 +104,7 @@ namespace C_18_01_Capstone.Web.Controllers
                 BirthDate = userViewModel.BirthDate,
                 FirstName = userViewModel.FirstName,
                 LastName = userViewModel.LastName,
-                CountryIso = userViewModel.CountryIso 
+                CountryId = userViewModel.CountryIso 
                     ?? "ALB",
                 Password = userViewModel.Password
             };

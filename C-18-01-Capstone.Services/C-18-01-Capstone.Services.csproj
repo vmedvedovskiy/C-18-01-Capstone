@@ -37,6 +37,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Services\CountryModel.cs" />
+    <Compile Include="Services\ICountryService.cs" />
     <Compile Include="Services\IEncryptionService.cs" />
     <Compile Include="Services\IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

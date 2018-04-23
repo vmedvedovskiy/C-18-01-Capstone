@@ -5,6 +5,7 @@
 @model C_18_01_Capstone.Web.ViewModels.UserViewModel
 
 @using C_18_01_Capstone.Web.Controllers
+@using C_18_01_Capstone.Web.ViewModels
 
 @Styles.Render("~/bundles/login")
 
@@ -48,13 +49,17 @@
                 @Html.TextBoxFor(m => Model.BirthDate, new { type = "date", id = "birthDate", @class = "form-control", required = true })
             </div>
         </div>
-        @*<div class="form-group">
+        <div class="form-group">
             @Html.LabelFor(m => m.CountryIso, "Country", new { @class = "col-sm-3 control-label" })
             <div class="col-sm-9">
                 @Html.DropDownListFor(m => m.CountryIso,
-                new SelectList(HtmlLists.Countries, "CountryIsoCode3", "Name"), new { id = "country", @class = "form-control" })
+                new SelectList(
+                    this.Model.Countries,
+                    nameof(CountryViewModel.CountryId),
+                    nameof(CountryViewModel.Name)), 
+                new { id = "country", @class = "form-control" })
             </div>
-        </div>*@
+        </div>
 
         <div class="form-group">
             <div class="col-sm-4 col-sm-offset-3">

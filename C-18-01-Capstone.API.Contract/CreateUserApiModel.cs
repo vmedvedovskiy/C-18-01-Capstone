@@ -10,7 +10,7 @@ namespace C_18_01_Capstone.API.Contract
 
         public DateTime BirthDate { get; set; }
 
-        public string CountryIso { get; set; }
+        public string CountryId { get; set; }
 
         public string Login { get; set; }
 
