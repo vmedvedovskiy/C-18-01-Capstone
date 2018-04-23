@@ -1,6 +1,5 @@
 ﻿using System.Web.Http;
 using C_18_01_Capstone.Main.DataAccessLayer;
-using C_18_01_Capstone.Main.DataContext;
 using C_18_01_Capstone.Services.Implementation.Services;
 using C_18_01_Capstone.Services.Services;
 using SimpleInjector;
@@ -21,18 +20,14 @@ namespace C_18_01_Capstone.API
         private static void InitDependencyResolution(
             HttpConfiguration config)
         {
-            // Create the container as usual.
             var container = new Container();
+
             container.Options.DefaultScopedLifestyle
                 = new AsyncScopedLifestyle();
-
-            // Register your types, for instance:
-            container
-                .Register<IDataAccess<User>, EfDataAccess<User>>(
-                Lifestyle.Scoped);
-
-            container
-                .Register<IDataAccess<Country>, EfDataAccess<Country>>(
+            
+            container.Register(
+                typeof(IDataAccess<>), 
+                typeof(IDataAccess<>).Assembly,
                 Lifestyle.Scoped);
 
             container
@@ -46,8 +41,7 @@ namespace C_18_01_Capstone.API
             container
                .Register<IEncryptionService, EncryptionService>(
                Lifestyle.Scoped);
-
-            // This is an extension method from the integration package.
+            
             container.RegisterWebApiControllers(config);
 
             container.Verify();
