@@ -21,7 +21,7 @@ namespace C_18_01_Capstone.Services.Implementation.Services
         {
             using (var sha256 = SHA256.Create())
             {
-                var saltedPassword = String.Format("{0}{1}", salt, password);
+                var saltedPassword = string.Format("{0}{1}", salt, password);
                 byte[] saltedPasswordAsBytes = Encoding.UTF8.GetBytes(saltedPassword);
                 var hashedBytes = sha256.ComputeHash(saltedPasswordAsBytes);
                 return Convert.ToBase64String(hashedBytes);

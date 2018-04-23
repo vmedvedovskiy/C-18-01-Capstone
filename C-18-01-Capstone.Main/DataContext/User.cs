@@ -8,7 +8,8 @@ namespace C_18_01_Capstone.Main.DataContext
     public class User
     {
         [Key]
-        public Guid UserId { get; private set; } = Guid.NewGuid();
+        public Guid UserId { get; set; }
+
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
