@@ -47,6 +47,21 @@ namespace C_18_01_Capstone.Web.Services
             }
         }
 
+        public async Task<IReadOnlyList<CreateUserApiModel>> FindUser(string login)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                var result = await httpClient
+                    .GetAsync(CreateResourceUri("users"));
+
+                var content = await result
+                    .Content.ReadAsStringAsync();
+
+                return JsonConvert
+                    .DeserializeObject<IReadOnlyList<CreateUserApiModel>>(content);
+            }
+        }
+        
         private Uri CreateResourceUri(string resource) 
             => new Uri(this.configuration.ApiBasePath, resource);
 

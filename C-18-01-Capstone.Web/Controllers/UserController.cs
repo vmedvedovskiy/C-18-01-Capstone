@@ -27,6 +27,13 @@ namespace C_18_01_Capstone.Web.Controllers
         [HttpGet]
         public ActionResult Login()
         {
+            var user = this.GetUser();
+
+            var userViewModel = new LoginViewModel
+            {
+                Login = user.Result.Login
+            };
+
             return this.View();
         }
 
@@ -62,7 +69,8 @@ namespace C_18_01_Capstone.Web.Controllers
 
             if (hasUserCreated)
             {
-                return this.Login();
+                return RedirectPermanent("/User/Login");
+                //return this.Login();
             }
 
             this.ModelState.AddModelError(
@@ -75,7 +83,22 @@ namespace C_18_01_Capstone.Web.Controllers
         [HttpPost]
         public ActionResult Login(LoginViewModel loginModel)
         {
+            var user = this.GetUser();
+            
             return this.View();
+        }
+
+        private async Task<UserViewModel> GetUser()
+        {
+            return (await this.apiClient.FindUser("5"))
+               .Select(_ => new UserViewModel
+               {
+                   BirthDate = _.BirthDate,
+                   FirstName = _.FirstName,
+                   Login = _.Login
+               })
+               .Where(_=>_.Login=="5")
+               .First();
         }
 
         private async Task<IReadOnlyList<CountryViewModel>> 
