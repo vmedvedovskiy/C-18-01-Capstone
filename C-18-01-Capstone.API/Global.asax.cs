@@ -27,7 +27,7 @@ namespace C_18_01_Capstone.API
             
             container.Register(
                 typeof(IDataAccess<>), 
-                typeof(IDataAccess<>).Assembly,
+                typeof(EfDataAccess<>),
                 Lifestyle.Scoped);
 
             container

@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using C_18_01_Capstone.API.Contract;
+using C_18_01_Capstone.Services;
 using Newtonsoft.Json;
 
 namespace C_18_01_Capstone.Web.Services
@@ -47,6 +48,21 @@ namespace C_18_01_Capstone.Web.Services
             }
         }
 
+        private async Task<TResult> GetResourceAsync<TResult>(string resource)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                var result = await httpClient
+                    .GetAsync(CreateResourceUri(resource));
+
+                var content = await result
+                    .Content.ReadAsStringAsync();
+
+                return JsonConvert
+                    .DeserializeObject<TResult>(content);
+            }
+        }
+
         private Uri CreateResourceUri(string resource) 
             => new Uri(this.configuration.ApiBasePath, resource);
 
@@ -56,6 +72,11 @@ namespace C_18_01_Capstone.Web.Services
                 JsonConvert.SerializeObject(user),
                 Encoding.UTF8,
                 JsonContentType);
+        }
+
+        public async Task<UserModel> GetUser(string login)
+        {
+            return await GetResourceAsync<UserModel>("users/" + login);
         }
     }
 }
