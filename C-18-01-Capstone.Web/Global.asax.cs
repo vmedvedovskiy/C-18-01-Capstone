@@ -1,6 +1,8 @@
 ﻿using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using C_18_01_Capstone.Services.Implementation.Services;
+using C_18_01_Capstone.Services.Services;
 using C_18_01_Capstone.Web.Services;
 using SimpleInjector;
 using SimpleInjector.Integration.Web;
@@ -23,6 +25,7 @@ namespace C_18_01_Capstone.Web
 
             container.Register<IConfigurationService, ConfigurationService>(Lifestyle.Singleton);
             container.Register<IApiClient, ApiClient>(Lifestyle.Scoped);
+            container.Register<IEncryptionService, EncryptionService>(Lifestyle.Scoped);
 
             container.RegisterMvcControllers();
 

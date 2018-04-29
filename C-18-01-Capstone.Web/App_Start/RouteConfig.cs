@@ -12,7 +12,13 @@ namespace C_18_01_Capstone.Web
         public static void RegisterRoutes(RouteCollection routes)
         {
       
-            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");    
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
+            routes.MapRoute(
+                    name: "Profile",
+                    url: "user/{id}/profile",
+                    defaults: new { controller = "User", action = "Index" }
+            );
 
             routes.MapRoute(
                     name: "Default",

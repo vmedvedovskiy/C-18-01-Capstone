@@ -26,6 +26,7 @@ namespace C_18_01_Capstone.API
             container.Options.DefaultScopedLifestyle
                 = new AsyncScopedLifestyle();
             
+<<<<<<< HEAD
             //container.Register(
             //    typeof(IDataAccess<>), 
             //    typeof(EfDataAccess<>).Assembly,
@@ -37,6 +38,11 @@ namespace C_18_01_Capstone.API
 
             container
                 .Register<IDataAccess<Country>, EfDataAccess<Country>>(
+=======
+            container.Register(
+                typeof(IDataAccess<>), 
+                typeof(EfDataAccess<>),
+>>>>>>> d99fed55eeb362394f98f401000baee9260fab78
                 Lifestyle.Scoped);
 
             container

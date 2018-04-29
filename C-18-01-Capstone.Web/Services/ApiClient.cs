@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using C_18_01_Capstone.API.Contract;
+using C_18_01_Capstone.Services;
 using Newtonsoft.Json;
 
 namespace C_18_01_Capstone.Web.Services
@@ -47,21 +48,36 @@ namespace C_18_01_Capstone.Web.Services
             }
         }
 
+<<<<<<< HEAD
         public async Task<IReadOnlyList<CreateUserApiModel>> FindUser(string login)
+=======
+        private async Task<TResult> GetResourceAsync<TResult>(string resource)
+>>>>>>> d99fed55eeb362394f98f401000baee9260fab78
         {
             using (var httpClient = new HttpClient())
             {
                 var result = await httpClient
+<<<<<<< HEAD
                     .GetAsync(CreateResourceUri("users"));
+=======
+                    .GetAsync(CreateResourceUri(resource));
+>>>>>>> d99fed55eeb362394f98f401000baee9260fab78
 
                 var content = await result
                     .Content.ReadAsStringAsync();
 
                 return JsonConvert
+<<<<<<< HEAD
                     .DeserializeObject<IReadOnlyList<CreateUserApiModel>>(content);
             }
         }
         
+=======
+                    .DeserializeObject<TResult>(content);
+            }
+        }
+
+>>>>>>> d99fed55eeb362394f98f401000baee9260fab78
         private Uri CreateResourceUri(string resource) 
             => new Uri(this.configuration.ApiBasePath, resource);
 
@@ -71,6 +87,11 @@ namespace C_18_01_Capstone.Web.Services
                 JsonConvert.SerializeObject(user),
                 Encoding.UTF8,
                 JsonContentType);
+        }
+
+        public async Task<UserModel> GetUser(string login)
+        {
+            return await GetResourceAsync<UserModel>("users/" + login);
         }
     }
 }

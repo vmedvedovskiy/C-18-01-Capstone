@@ -1,5 +1,6 @@
 ﻿using System.Web.Http;
 using C_18_01_Capstone.API.Contract;
+using C_18_01_Capstone.Services;
 using C_18_01_Capstone.Services.Services;
 
 namespace C_18_01_Capstone.API.Controllers
@@ -7,12 +8,26 @@ namespace C_18_01_Capstone.API.Controllers
     [RoutePrefix("api/v1/users")]
     public class UserController : ApiController
     {
+        private const string LoginIsRequired = "Login is required";
+        private const string PasswordIsRequired = "Password is required";
         private readonly IUserService userService;
 
         public UserController(
             IUserService userService)
         {
             this.userService = userService;
+        }
+
+        [HttpGet]
+        [Route("{login}")]
+        public IHttpActionResult Get(string login)
+        {
+            if (string.IsNullOrEmpty(login))
+            {
+                return this.BadRequest(LoginIsRequired);
+            }
+
+            return this.Ok<UserModel>(userService.FindUser(login));
         }
 
         [HttpPost]
@@ -22,12 +37,12 @@ namespace C_18_01_Capstone.API.Controllers
         {
             if(string.IsNullOrEmpty(userToCreate.Login))
             {
-                return this.BadRequest("Login is required");
+                return this.BadRequest(LoginIsRequired);
             }
 
             if (string.IsNullOrEmpty(userToCreate.Password))
             {
-                return this.BadRequest("Password is required");
+                return this.BadRequest(PasswordIsRequired);
             }
 
             if (string.IsNullOrEmpty(userToCreate.CountryId))
