@@ -33,7 +33,7 @@ namespace C_18_01_Capstone.Services.Implementation.Services
 
         public UserModel FindUser(string login)
         {
-            return this.dataAccess.GetEntities()
+                      return this.dataAccess.GetEntities()
                 .Where(_ => _.Login == login)
                 .Select(this.Convert)
                 .SingleOrDefault();
@@ -51,7 +51,10 @@ namespace C_18_01_Capstone.Services.Implementation.Services
                 {
                     CountryIsoCode3 = user.Country.CountryIsoCode3,
                     Name = user.Country.Name
-                }
+                },
+                HashedPassword = user.HashedPassword,
+                Salt = user.Salt,
+                CountryId = user.CountryId
             };
         }
 

@@ -62,7 +62,7 @@ namespace C_18_01_Capstone.Web.Services
                     .DeserializeObject<TResult>(content);
             }
         }
-
+        
         private Uri CreateResourceUri(string resource) 
             => new Uri(this.configuration.ApiBasePath, resource);
 

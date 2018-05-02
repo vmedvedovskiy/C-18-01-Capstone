@@ -1,5 +1,6 @@
 ﻿using System.Web.Http;
 using C_18_01_Capstone.Main.DataAccessLayer;
+using C_18_01_Capstone.Main.DataContext;
 using C_18_01_Capstone.Services.Implementation.Services;
 using C_18_01_Capstone.Services.Services;
 using SimpleInjector;
@@ -25,6 +26,7 @@ namespace C_18_01_Capstone.API
             container.Options.DefaultScopedLifestyle
                 = new AsyncScopedLifestyle();
             
+
             container.Register(
                 typeof(IDataAccess<>), 
                 typeof(EfDataAccess<>),

@@ -7,13 +7,12 @@ namespace C_18_01_Capstone.Web
     {
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.min.js"));
-
             bundles.Add(new ScriptBundle("~/bundles/register").Include(
                         "~/Scripts/register.js"));
 
-
+            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
+                        "~/Scripts/jquery-{version}.min.js"));
+            
             bundles.Add(new ScriptBundle("~/bundles/jquery-validation").Include(
                         "~/Scripts/jquery.validate.min.js",
                         "~/Scripts/jquery.validate.unobtrusive.js"));
@@ -26,6 +25,9 @@ namespace C_18_01_Capstone.Web
 
             bundles.Add(new StyleBundle("~/bundles/login").Include(
                             "~/Content/login.css"));
+
+            bundles.Add(new StyleBundle("~/bundles/profile").Include(
+                            "~/Content/profile.css"));
 
             BundleTable.EnableOptimizations = true;
         }

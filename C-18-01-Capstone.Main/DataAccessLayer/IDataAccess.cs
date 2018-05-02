@@ -10,5 +10,6 @@ namespace C_18_01_Capstone.Main.DataAccessLayer
         void AddRange(IList<T> entities);
 
         IQueryable<T> GetEntities();
+        
     }
 }

@@ -16,18 +16,25 @@ namespace C_18_01_Capstone.Web.Controllers
         private readonly IApiClient apiClient;
         private readonly IEncryptionService encryptionService;
 
-        public UserController(IApiClient apiClient
-            , IEncryptionService encryptionService)
+        private readonly string LoginError = "The user name or password provided is incorrect.";
+
+        public UserController(IApiClient apiClient, IEncryptionService encryptionService)
         {
             this.apiClient = apiClient;
             this.encryptionService = encryptionService;
         }
 
         [HttpGet]
-        [Authorize]
-        public ActionResult Index()
+        //[Authorize]
+        public async Task<ActionResult> Index()
         {
-            return View();
+            string login = this.Request.QueryString["login"];
+            var x = System.Web.HttpContext.Current.User.Identity.Name;
+
+            UserModel user = await apiClient.GetUser(login);
+
+            return View(user);
+            
         }
 
         [HttpGet]
@@ -52,13 +59,6 @@ namespace C_18_01_Capstone.Web.Controllers
             return View(userViewModel);
         }
 
-        private bool TryParse(string value, out object result)
-        {
-            result = 10;
-
-            return true;
-        }
-
         [HttpPost]
         public async Task<ActionResult> Register(
             UserViewModel userViewModel)
@@ -76,9 +76,9 @@ namespace C_18_01_Capstone.Web.Controllers
                 this.ModelState.AddModelError(
                 nameof(UserViewModel.Login),
                 "Something went wrong. Please, try again");
-            }            
+            }
 
-            return this.Login();
+            return RedirectToAction("Login");
         }
 
         [HttpPost]
@@ -91,18 +91,25 @@ namespace C_18_01_Capstone.Web.Controllers
 
             UserModel user = await apiClient.GetUser(loginModel.Login);
 
+            if(user is null)
+            {
+                ModelState.AddModelError("", LoginError);
+                return this.View();
+            }
+
             string hashedPassword = encryptionService.EncryptPassword
                 (loginModel.Password, user.Salt);
 
             if (user.HashedPassword.Equals(hashedPassword,
                 StringComparison.Ordinal))
             {
-                RedirectToAction("Index");
+                return RedirectToAction("Index", "User", new {  user.Login});
             }
 
-            throw new ApplicationException();
+            ModelState.AddModelError("", LoginError);
+            return this.View();
         }
-
+        
         private async Task<IReadOnlyList<CountryViewModel>> 
             GetCountries()
         {
