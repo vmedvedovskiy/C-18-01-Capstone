@@ -3,6 +3,8 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using C_18_01_Capstone.Services.Implementation.Services;
 using C_18_01_Capstone.Services.Services;
+using C_18_01_Capstone.Web.Infrastructure.Filters;
+using C_18_01_Capstone.Web.Infrastructure.SimpleInjector;
 using C_18_01_Capstone.Web.Services;
 using SimpleInjector;
 using SimpleInjector.Integration.Web;
@@ -17,9 +19,12 @@ namespace C_18_01_Capstone.Web
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            GlobalFilters.Filters.Add(new HandleExceptionAttribute());
 
             var container = new Container();
 
+            container.Options.PropertySelectionBehavior
+                = new ImportPropertySelectionBehavior();
             container.Options.DefaultScopedLifestyle
                  = new WebRequestLifestyle();
 
@@ -27,7 +32,8 @@ namespace C_18_01_Capstone.Web
             container.Register<IApiClient, ApiClient>(Lifestyle.Scoped);
             container.Register<IEncryptionService, EncryptionService>(Lifestyle.Scoped);
 
-            container.RegisterMvcControllers();
+            //container.RegisterMvcControllers();
+            container.RegisterMvcIntegratedFilterProvider();
 
             container.Verify();
 

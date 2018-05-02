@@ -8,9 +8,11 @@ using C_18_01_Capstone.Web.ViewModels;
 using C_18_01_Capstone.Web.Services;
 using C_18_01_Capstone.Services.Services;
 using C_18_01_Capstone.Services;
+using C_18_01_Capstone.Web.Infrastructure.Filters;
 
 namespace C_18_01_Capstone.Web.Controllers
 {
+    [AuthorizeUser]
     public class UserController : Controller
     {
         private readonly IApiClient apiClient;
@@ -23,14 +25,14 @@ namespace C_18_01_Capstone.Web.Controllers
             this.encryptionService = encryptionService;
         }
 
-        [HttpGet]
-        [Authorize]
+        [HttpGet]       
         public ActionResult Index()
         {
             return View();
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult Login()
         {
             return this.View();
@@ -97,10 +99,14 @@ namespace C_18_01_Capstone.Web.Controllers
             if (user.HashedPassword.Equals(hashedPassword,
                 StringComparison.Ordinal))
             {
-                RedirectToAction("Index");
+                HttpContext.Session["Login"] = user.Login;
+                HttpContext.Session["HashedPassword"] = user.HashedPassword;
+                return RedirectToAction("Index");
             }
-
-            throw new ApplicationException();
+            else
+            {
+                throw new ApplicationException();
+            }
         }
 
         private async Task<IReadOnlyList<CountryViewModel>> 

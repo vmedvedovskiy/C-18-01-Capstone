@@ -47,6 +47,8 @@ namespace C_18_01_Capstone.Services.Implementation.Services
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Login = user.Login,
+                HashedPassword = user.HashedPassword,
+                Salt = user.Salt
                 Country = new CountryModel
                 {
                     CountryIsoCode3 = user.Country.CountryIsoCode3,
