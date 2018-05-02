@@ -2,15 +2,12 @@
 
 <html>
 <head>
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-
-    <script href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
-    <script href="//code.jquery.com/jquery-1.11.1.min.js"></script>
-
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 
     <meta name="viewport" content="width=device-width" />
     <title>Capstone</title>
     @Styles.Render("~/bundles/css")
+    @Styles.Render("~/bundles/login")
 </head>
 <body>
     <div>
@@ -24,7 +21,10 @@
     </div>
 </body>
 </html>
+
 @Scripts.Render("~/bundles/register")
-@Scripts.Render("~/bundles/jquery")
+
+@Scripts.Render("~/bundles/jquery")      @*with this script does not work the script of password check "register.js"*@
+
 @Scripts.Render("~/bundles/jquery-validation")
 @Scripts.Render("~/bundles/bootstrap")

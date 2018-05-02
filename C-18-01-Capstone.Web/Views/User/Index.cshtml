@@ -4,5 +4,41 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+@model  C_18_01_Capstone.Services.UserModel
 
+
+@Styles.Render("~/bundles/profile")
+
+@using (Html.BeginForm())
+
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-6">
+                <div class="well well-sm">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-4">
+                            <img src="https://i.pinimg.com/736x/26/b7/04/26b704ca46361633d9134e397bf0f8f1--hugh-jackman-hugh-obrian.jpg" alt="" class="img-rounded img-responsive" />
+                        </div>
+                        <div class="col-sm-6 col-md-8">
+                            <h4>
+                                @Model.LastName @Model.FirstName
+                            </h4>
+                            <small>
+                                <cite title="San Francisco, USA">
+                                    @Model.Country.Name, @Model.Country.CountryIsoCode3 <i class="glyphicon glyphicon-map-marker">
+                                    </i>
+                                </cite>
+                            </small>
+                            <p>
+                                <i class="glyphicon glyphicon-envelope"></i>@Model.Login
+                                <br />
+                                <i class="glyphicon glyphicon-gift"></i>@Model.BirthDate.Day.@Model.BirthDate.Month.@Model.BirthDate.Year
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

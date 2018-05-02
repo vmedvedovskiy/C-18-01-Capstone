@@ -18,11 +18,11 @@ namespace C_18_01_Capstone.Main.DataContext
         {
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 
-            modelBuilder.Entity<UserFriend>().HasKey(_ => new {_.FriendId, _.UserId });
+            modelBuilder.Entity<UserFriend>().HasKey(_ => new { _.FriendId, _.UserId });
 
-            modelBuilder.Entity<Like>().HasKey(_ => new { _.PostId, _.UserId, _.CommentId});
+            modelBuilder.Entity<Like>().HasKey(_ => new { _.PostId, _.UserId, _.CommentId });
         }
-        
+
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Content> Contents { get; set; }

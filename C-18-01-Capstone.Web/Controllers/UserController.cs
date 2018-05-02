@@ -16,30 +16,30 @@ namespace C_18_01_Capstone.Web.Controllers
         private readonly IApiClient apiClient;
         private readonly IEncryptionService encryptionService;
 
-        public UserController(IApiClient apiClient
-            , IEncryptionService encryptionService)
+        private readonly string LoginError = "The user name or password provided is incorrect.";
+
+        public UserController(IApiClient apiClient, IEncryptionService encryptionService)
         {
             this.apiClient = apiClient;
             this.encryptionService = encryptionService;
         }
 
         [HttpGet]
-        [Authorize]
-        public ActionResult Index()
+        //[Authorize]
+        public async Task<ActionResult> Index()
         {
-            return View();
+            string login = this.Request.QueryString["login"];
+            var x = System.Web.HttpContext.Current.User.Identity.Name;
+
+            UserModel user = await apiClient.GetUser(login);
+
+            return View(user);
+            
         }
 
         [HttpGet]
         public ActionResult Login()
         {
-            var user = this.GetUser();
-
-            var userViewModel = new LoginViewModel
-            {
-                Login = user.Result.Login
-            };
-
             return this.View();
         }
 
@@ -59,13 +59,6 @@ namespace C_18_01_Capstone.Web.Controllers
             return View(userViewModel);
         }
 
-        private bool TryParse(string value, out object result)
-        {
-            result = 10;
-
-            return true;
-        }
-
         [HttpPost]
         public async Task<ActionResult> Register(
             UserViewModel userViewModel)
@@ -80,30 +73,17 @@ namespace C_18_01_Capstone.Web.Controllers
 
             if (!hasUserCreated)
             {
-<<<<<<< HEAD
-                return RedirectPermanent("/User/Login");
-                //return this.Login();
-            }
-
-            this.ModelState.AddModelError(
-=======
                 this.ModelState.AddModelError(
->>>>>>> d99fed55eeb362394f98f401000baee9260fab78
                 nameof(UserViewModel.Login),
                 "Something went wrong. Please, try again");
-            }            
+            }
 
-            return this.Login();
+            return RedirectToAction("Login");
         }
 
         [HttpPost]
         public async Task<ActionResult> Login(LoginViewModel loginModel)
         {
-<<<<<<< HEAD
-            var user = this.GetUser();
-            
-            return this.View();
-=======
             if (!ModelState.IsValid)
             {
                 throw new ApplicationException();
@@ -111,32 +91,25 @@ namespace C_18_01_Capstone.Web.Controllers
 
             UserModel user = await apiClient.GetUser(loginModel.Login);
 
+            if(user is null)
+            {
+                ModelState.AddModelError("", LoginError);
+                return this.View();
+            }
+
             string hashedPassword = encryptionService.EncryptPassword
                 (loginModel.Password, user.Salt);
 
             if (user.HashedPassword.Equals(hashedPassword,
                 StringComparison.Ordinal))
             {
-                RedirectToAction("Index");
+                return RedirectToAction("Index", "User", new {  user.Login});
             }
 
-            throw new ApplicationException();
->>>>>>> d99fed55eeb362394f98f401000baee9260fab78
+            ModelState.AddModelError("", LoginError);
+            return this.View();
         }
-
-        private async Task<UserViewModel> GetUser()
-        {
-            return (await this.apiClient.FindUser("5"))
-               .Select(_ => new UserViewModel
-               {
-                   BirthDate = _.BirthDate,
-                   FirstName = _.FirstName,
-                   Login = _.Login
-               })
-               .Where(_=>_.Login=="5")
-               .First();
-        }
-
+        
         private async Task<IReadOnlyList<CountryViewModel>> 
             GetCountries()
         {

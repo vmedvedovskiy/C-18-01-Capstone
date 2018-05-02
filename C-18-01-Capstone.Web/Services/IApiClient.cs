@@ -14,11 +14,8 @@ namespace C_18_01_Capstone.Web.Services
         Task<UserModel> GetUser(string login);
 
         Task<IReadOnlyList<CountryApiModel>> GetCountries();
-<<<<<<< HEAD
 
-        Task<IReadOnlyList<CreateUserApiModel>> FindUser(string login);
-=======
-        
->>>>>>> d99fed55eeb362394f98f401000baee9260fab78
+        //Task<IReadOnlyList<CreateUserApiModel>> FindUser(string login);
+
     }
 }
