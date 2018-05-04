@@ -1,12 +1,12 @@
 ﻿using C_18_01_Capstone.Main.DataContext;
 using System.Collections.Generic;
 using System.Linq;
-using System;
+using System.Data.Entity;
 
 namespace C_18_01_Capstone.Main.DataAccessLayer
 {
     public class EfDataAccess<T> : IDataAccess<T> where T : class
-    {        
+    {
         public void AddEntity(T entity)
         {
             using (var context = new SocialNetworkContext())
@@ -34,18 +34,17 @@ namespace C_18_01_Capstone.Main.DataAccessLayer
             }
         }
 
-        public IList<T> GetEntities()
-        {
-            using (var context = new SocialNetworkContext())
-            {
-                var result = context.Set<T>().Select(_ => _).ToList();
-
-                return result;
-            }
-        }
-
-        IQueryable<T> IDataAccess<T>.GetEntities()
+        public IQueryable<User> GetUserByLogin(string login)
             => new SocialNetworkContext()
-                    .Set<T>();
+                .Set<User>()
+                .Include(_ => (_ as User).Country)
+                .Where(user => user.Login == login);
+
+
+
+        public IQueryable<T> GetEntities()
+            => new SocialNetworkContext()
+                .Set<T>();
+        
     }
 }

@@ -27,7 +27,8 @@ namespace C_18_01_Capstone.API.Controllers
                 return this.BadRequest(LoginIsRequired);
             }
 
-            return this.Ok<UserModel>(userService.FindUser(login));
+            var result = this.Ok<UserModel>(userService.FindUser(login));
+            return result;
         }
 
         [HttpPost]

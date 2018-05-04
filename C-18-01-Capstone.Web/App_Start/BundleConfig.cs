@@ -27,6 +27,9 @@ namespace C_18_01_Capstone.Web
             bundles.Add(new StyleBundle("~/bundles/login").Include(
                             "~/Content/login.css"));
 
+            bundles.Add(new StyleBundle("~/bundles/profile").Include(
+                            "~/Content/profile.css"));
+
             BundleTable.EnableOptimizations = true;
         }
     }

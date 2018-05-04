@@ -1,7 +1,5 @@
-﻿using System;
+﻿using C_18_01_Capstone.Web.Services;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -24,6 +22,9 @@ namespace C_18_01_Capstone.Web.Infrastructure.Filters
                     }
                     ));
             filterContext.ExceptionHandled = true;
+
+            DataLogger.LogOperation($"Exception: {filterContext.HttpContext.Response.StatusCode}" +
+                $" message: {filterContext.Exception.Message}");
         }
     }
 }
