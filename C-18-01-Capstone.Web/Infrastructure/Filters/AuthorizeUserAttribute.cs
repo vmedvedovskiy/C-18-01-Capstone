@@ -19,10 +19,12 @@ namespace C_18_01_Capstone.Web.Infrastructure.Filters
             string login = (string)httpContext.Session["Login"];
             string hashedPassword = (string)httpContext.Session["HashedPassword"];
 
-            Task<UserModel> getUserTask = ApiClient.GetUser(login);
-            getUserTask.Wait();
+            UserModel user = null;
 
-            UserModel user = getUserTask.Result;
+            var task = Task.Run ( async() => {
+                user = await ApiClient.GetUser(login);
+            } );
+            task.Wait();
 
             var result = (user.HashedPassword.Equals(hashedPassword,
                 StringComparison.Ordinal));

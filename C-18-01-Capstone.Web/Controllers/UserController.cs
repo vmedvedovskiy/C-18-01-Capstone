@@ -27,18 +27,10 @@ namespace C_18_01_Capstone.Web.Controllers
             this.encryptionService = encryptionService;
         }
 
-        [HttpGet]       
+        [HttpGet]
         public async Task<ActionResult> Index()
         {
-            var login = (string)HttpContext.Session["Login"];
-
-            if(login is null)
-            {
-                return RedirectToAction("Login");
-            }
-
-            UserModel user = await apiClient.GetUser(login);
-            return View(user);
+            return View();
         }
 
         [HttpGet]
