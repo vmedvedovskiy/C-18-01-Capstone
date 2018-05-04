@@ -20,8 +20,7 @@ namespace C_18_01_Capstone.Web.Services
             this.configuration = configuration;
         }
 
-        public async Task<bool> CreateUser(
-            CreateUserApiModel user)
+        public async Task<bool> CreateUser(CreateUserApiModel user)
         {
             using (var httpClient = new HttpClient())
             {
@@ -33,6 +32,11 @@ namespace C_18_01_Capstone.Web.Services
             }
         }
 
+        public async Task<UserModel> GetUser(string login)
+        {
+            return await GetResourceAsync<UserModel>("users/" + login);
+        }
+        
         public async Task<IReadOnlyList<CountryApiModel>> GetCountries()
         {
             using (var httpClient = new HttpClient())
@@ -72,11 +76,6 @@ namespace C_18_01_Capstone.Web.Services
                 JsonConvert.SerializeObject(user),
                 Encoding.UTF8,
                 JsonContentType);
-        }
-
-        public async Task<UserModel> GetUser(string login)
-        {
-            return await GetResourceAsync<UserModel>("users/" + login);
         }
     }
 }

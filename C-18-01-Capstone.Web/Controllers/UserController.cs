@@ -18,6 +18,8 @@ namespace C_18_01_Capstone.Web.Controllers
         private readonly IApiClient apiClient;
         private readonly IEncryptionService encryptionService;
 
+        private const string LoginError = "That username is taken. Try another.";
+
         public UserController(IApiClient apiClient
             , IEncryptionService encryptionService)
         {
@@ -26,9 +28,17 @@ namespace C_18_01_Capstone.Web.Controllers
         }
 
         [HttpGet]       
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View();
+            var login = (string)HttpContext.Session["Login"];
+
+            if(login is null)
+            {
+                return RedirectToAction("Login");
+            }
+
+            UserModel user = await apiClient.GetUser(login);
+            return View(user);
         }
 
         [HttpGet]
@@ -70,8 +80,13 @@ namespace C_18_01_Capstone.Web.Controllers
                 throw new ApplicationException();
             }
 
-            var hasUserCreated = await this.apiClient
-                .CreateUser(this.Convert(userViewModel));
+            if(ExistUserLogin(userViewModel.Login).Result)
+            {
+                this.ModelState.AddModelError("", LoginError);
+                return View(userViewModel);
+            }
+            
+            var hasUserCreated = await this.apiClient.CreateUser(this.Convert(userViewModel));
 
             if (!hasUserCreated)
             {
@@ -80,10 +95,22 @@ namespace C_18_01_Capstone.Web.Controllers
                 "Something went wrong. Please, try again");
             }            
 
-            return this.Login();
+            return RedirectToAction("Login");
+        }
+        
+
+        private async Task<bool> ExistUserLogin(string login)
+        {
+            UserModel user = await this.apiClient.GetUser(login);
+
+            if (user == null)
+                return false;
+            
+            return true;
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<ActionResult> Login(LoginViewModel loginModel)
         {
             if (!ModelState.IsValid)

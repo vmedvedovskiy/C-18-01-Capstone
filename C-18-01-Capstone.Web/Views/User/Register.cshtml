@@ -4,7 +4,6 @@
 
 @model C_18_01_Capstone.Web.ViewModels.UserViewModel
 
-@using C_18_01_Capstone.Web.Controllers
 @using C_18_01_Capstone.Web.ViewModels
 
 @Styles.Render("~/bundles/login")
@@ -30,12 +29,16 @@
             <div class="col-sm-9">
                 @Html.TextBoxFor(m => Model.Login, "", new { placeholder = "Login", @class = "form-control", autofocus = true, required = true })
             </div>
+            <div class="col-sm-9 col-sm-offset-3">
+                @Html.ValidationSummary(true, "Login was unsuccessful. Please correct the errors and try again.", new { @class = "text-danger" })
+            </div>
         </div>
         <div class="form-group">
             @Html.LabelFor(m => Model.Password, "Password", new { @class = "col-sm-3 control-label" })
             <div class="col-sm-9">
                 @Html.PasswordFor(m => Model.Password, new { placeholder = "Password", @class = "form-control", autofocus = true, id = "password", required = true })
             </div>
+
         </div>
         <div class="form-group">
             @Html.LabelFor(m => m.Password, "Confirm Password", new { @class = "col-sm-3 control-label" })

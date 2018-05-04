@@ -20,6 +20,7 @@ namespace C_18_01_Capstone.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             GlobalFilters.Filters.Add(new HandleExceptionAttribute());
+            GlobalFilters.Filters.Add(new CustomActionAttribute());
 
             var container = new Container();
 
@@ -32,7 +33,7 @@ namespace C_18_01_Capstone.Web
             container.Register<IApiClient, ApiClient>(Lifestyle.Scoped);
             container.Register<IEncryptionService, EncryptionService>(Lifestyle.Scoped);
 
-            //container.RegisterMvcControllers();
+            container.RegisterMvcControllers();
             container.RegisterMvcIntegratedFilterProvider();
 
             container.Verify();
