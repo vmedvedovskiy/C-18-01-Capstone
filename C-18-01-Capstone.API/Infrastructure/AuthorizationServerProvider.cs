@@ -24,6 +24,7 @@ namespace C_18_01_Capstone.API.Infrastructure
         {
             string login = context.Parameters["Login"];
             string hashedPassword = context.Parameters["HashedPassword"];
+            hashedPassword = hashedPassword.Replace(' ', '+');
             UserModel user = userService.FindUser(login);
 
             if (hashedPassword.Equals(user.HashedPassword,
@@ -35,8 +36,8 @@ namespace C_18_01_Capstone.API.Infrastructure
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
-            context.Validated(
-                new ClaimsIdentity(context.Options.AuthenticationType));
+            context.Validated(new ClaimsIdentity(
+                context.Options.AuthenticationType));
         }
     }
 }

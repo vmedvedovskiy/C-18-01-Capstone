@@ -33,14 +33,7 @@ namespace C_18_01_Capstone.Web.Infrastructure.Filters
 
             return result;
         }
-
-        private void Logging(bool result, string login)
-        {
-            var successful = result ? "successful" : "unsuccessful";
-            DataLogger.LogOperation($"{login}'s authorize was {successful}");
-        }
         
-
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
             filterContext.Result = new RedirectToRouteResult(
@@ -51,6 +44,12 @@ namespace C_18_01_Capstone.Web.Infrastructure.Filters
                         action = "Login"
                     })
                );
+        }
+
+        private void Logging(bool result, string login)
+        {
+            var successful = result ? "successful" : "unsuccessful";
+            DataLogger.LogOperation($"{login}'s authorize was {successful}");
         }
     }
 }

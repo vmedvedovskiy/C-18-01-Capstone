@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using C_18_01_Capstone.API.Contract;
+using C_18_01_Capstone.API.Infrastructure;
 using C_18_01_Capstone.Services;
 using Newtonsoft.Json;
 
@@ -32,11 +33,27 @@ namespace C_18_01_Capstone.Web.Services
             }
         }
 
+        public async Task<Token> GetToken(string login, string hashedPassword)
+        {
+            string keysAndValues = $"grant_type=password&Login={login}&HashedPassword={hashedPassword}";
+
+            using (var httpClient = new HttpClient())
+            {
+                var result = await httpClient
+                     .PostAsync("http://localhost:3122/token", CreateApiRequest(keysAndValues));
+
+                var content = await result
+                   .Content.ReadAsStringAsync();
+                
+                return JsonConvert.DeserializeObject<Token>(content);
+            }
+        }
+
         public async Task<UserModel> GetUser(string login)
         {
             return await GetResourceAsync<UserModel>("users/" + login);
         }
-        
+
         public async Task<IReadOnlyList<CountryApiModel>> GetCountries()
         {
             using (var httpClient = new HttpClient())
@@ -67,13 +84,20 @@ namespace C_18_01_Capstone.Web.Services
             }
         }
 
-        private Uri CreateResourceUri(string resource) 
+        private Uri CreateResourceUri(string resource)
             => new Uri(this.configuration.ApiBasePath, resource);
 
         private HttpContent CreateApiRequest(CreateUserApiModel user)
         {
             return new StringContent(
                 JsonConvert.SerializeObject(user),
+                Encoding.UTF8,
+                JsonContentType);
+        }
+
+        private HttpContent CreateApiRequest(string keysAndValues)
+        {
+            return new StringContent(keysAndValues,
                 Encoding.UTF8,
                 JsonContentType);
         }
