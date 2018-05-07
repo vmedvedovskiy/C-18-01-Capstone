@@ -6,7 +6,7 @@ namespace C_18_01_Capstone.Main.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<C_18_01_Capstone.Main.DataContext.SocialNetworkContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<SocialNetworkContext>
     {
         public Configuration()
         {
@@ -14,10 +14,16 @@ namespace C_18_01_Capstone.Main.Migrations
             ContextKey = "C_18_01_Capstone.Main.DataContext.SocialNetworkContext";
         }
 
-        protected override void Seed(C_18_01_Capstone.Main.DataContext.SocialNetworkContext context)
+        protected override void Seed(SocialNetworkContext context)
         {
-            DbInitializer dbInitializer = new DbInitializer();
-            dbInitializer.InitializeCountriesTable();
+            
+
+            if(!context.Set<Country>().Any())
+            {
+                var dbInitializer = new DbInitializer();
+
+                dbInitializer.InitializeCountriesTable();
+            }            
         }
     }
 }

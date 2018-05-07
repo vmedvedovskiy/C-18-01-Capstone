@@ -12,7 +12,6 @@ using C_18_01_Capstone.Web.Infrastructure.Filters;
 
 namespace C_18_01_Capstone.Web.Controllers
 {
-    [AuthorizeUser]
     public class UserController : Controller
     {
         private readonly IApiClient apiClient;
@@ -20,14 +19,16 @@ namespace C_18_01_Capstone.Web.Controllers
 
         private const string LoginError = "That username is taken. Try another.";
 
-        public UserController(IApiClient apiClient
-            , IEncryptionService encryptionService)
+        public UserController(
+            IApiClient apiClient, 
+            IEncryptionService encryptionService)
         {
             this.apiClient = apiClient;
             this.encryptionService = encryptionService;
         }
 
         [HttpGet]
+        [AuthorizeUser]
         public async Task<ActionResult> Index()
         {
             return View();
@@ -72,13 +73,15 @@ namespace C_18_01_Capstone.Web.Controllers
                 throw new ApplicationException();
             }
 
-            if(ExistUserLogin(userViewModel.Login).Result)
+            if(await ExistUserLogin(userViewModel.Login))
             {
                 this.ModelState.AddModelError("", LoginError);
+
                 return View(userViewModel);
             }
             
-            var hasUserCreated = await this.apiClient.CreateUser(this.Convert(userViewModel));
+            var hasUserCreated = await this.apiClient
+                .CreateUser(this.Convert(userViewModel));
 
             if (!hasUserCreated)
             {
@@ -92,14 +95,7 @@ namespace C_18_01_Capstone.Web.Controllers
         
 
         private async Task<bool> ExistUserLogin(string login)
-        {
-            UserModel user = await this.apiClient.GetUser(login);
-
-            if (user == null)
-                return false;
-            
-            return true;
-        }
+            => (await this.apiClient.GetUser(login)) != null;
 
         [HttpPost]
         [AllowAnonymous]
@@ -120,7 +116,9 @@ namespace C_18_01_Capstone.Web.Controllers
             {
                 HttpContext.Session["Login"] = user.Login;
                 HttpContext.Session["HashedPassword"] = user.HashedPassword;
-                return RedirectToAction("Index");
+                // do request for token
+                // store token in session
+                // in auth attribute, check token presence
             }
             else
             {

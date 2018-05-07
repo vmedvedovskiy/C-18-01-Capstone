@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using System.Web;
 using C_18_01_Capstone.Services;
 using C_18_01_Capstone.Services.Services;
 using Microsoft.Owin.Security.OAuth;
@@ -20,7 +17,7 @@ namespace C_18_01_Capstone.API.Infrastructure
             this.userService = userService;
         }
 
-        public override async Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
+        public override Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
             string login = context.Parameters["Login"];
             string hashedPassword = context.Parameters["HashedPassword"];
@@ -30,13 +27,17 @@ namespace C_18_01_Capstone.API.Infrastructure
                 StringComparison.Ordinal))
             {
                 context.Validated();
-            }            
+            }
+
+            return Task.CompletedTask;
         }
 
-        public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
+        public override Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
             context.Validated(
                 new ClaimsIdentity(context.Options.AuthenticationType));
+
+            return Task.CompletedTask;
         }
     }
 }

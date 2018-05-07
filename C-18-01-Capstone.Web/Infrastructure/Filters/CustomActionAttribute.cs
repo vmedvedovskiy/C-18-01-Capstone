@@ -1,10 +1,7 @@
 ﻿using C_18_01_Capstone.Web.Services;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web;
 using System.Web.Mvc;
+using System.Threading.Tasks;
 
 namespace C_18_01_Capstone.Web.Infrastructure.Filters
 {

@@ -37,7 +37,7 @@ namespace C_18_01_Capstone.Main.DataAccessLayer
         public IQueryable<User> GetUserByLogin(string login)
             => new SocialNetworkContext()
                 .Set<User>()
-                .Include(_ => (_ as User).Country)
+                .Include(_ => _.Country)
                 .Where(user => user.Login == login);
 
 

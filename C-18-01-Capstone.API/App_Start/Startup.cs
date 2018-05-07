@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Http;
 using C_18_01_Capstone.API.Infrastructure;
 using C_18_01_Capstone.Main.DataAccessLayer;
-using C_18_01_Capstone.Main.DataContext;
 using C_18_01_Capstone.Services.Implementation.Services;
 using C_18_01_Capstone.Services.Services;
 using Microsoft.Owin;
@@ -22,7 +18,7 @@ namespace C_18_01_Capstone.API.App_Start
     {
         public void Configuration(IAppBuilder appBuilder)
         {
-            var config = new HttpConfiguration();
+            var config = GlobalConfiguration.Configuration;
 
             var container = new Container();
 
@@ -76,6 +72,8 @@ namespace C_18_01_Capstone.API.App_Start
             }
 
             WebApiConfig.Register(config);
+
+            config.EnsureInitialized();
         }
     }
 }

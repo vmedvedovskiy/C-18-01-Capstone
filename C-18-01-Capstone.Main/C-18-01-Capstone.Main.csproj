@@ -69,6 +69,10 @@
     <Compile Include="Migrations\201804201145360_ForeignKeyForCountry.Designer.cs">
       <DependentUpon>201804201145360_ForeignKeyForCountry.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805071717528_AddCountryToUser.cs" />
+    <Compile Include="Migrations\201805071717528_AddCountryToUser.Designer.cs">
+      <DependentUpon>201805071717528_AddCountryToUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -83,6 +87,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804201145360_ForeignKeyForCountry.resx">
       <DependentUpon>201804201145360_ForeignKeyForCountry.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805071717528_AddCountryToUser.resx">
+      <DependentUpon>201805071717528_AddCountryToUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -36,7 +36,7 @@ namespace C_18_01_Capstone.Web.Services
         {
             return await GetResourceAsync<UserModel>("users/" + login);
         }
-        
+
         public async Task<IReadOnlyList<CountryApiModel>> GetCountries()
         {
             using (var httpClient = new HttpClient())
@@ -57,7 +57,7 @@ namespace C_18_01_Capstone.Web.Services
             using (var httpClient = new HttpClient())
             {
                 var result = await httpClient
-                    .GetAsync(CreateResourceUri(resource));
+                        .GetAsync(CreateResourceUri(resource));
 
                 var content = await result
                     .Content.ReadAsStringAsync();
@@ -67,7 +67,7 @@ namespace C_18_01_Capstone.Web.Services
             }
         }
 
-        private Uri CreateResourceUri(string resource) 
+        private Uri CreateResourceUri(string resource)
             => new Uri(this.configuration.ApiBasePath, resource);
 
         private HttpContent CreateApiRequest(CreateUserApiModel user)

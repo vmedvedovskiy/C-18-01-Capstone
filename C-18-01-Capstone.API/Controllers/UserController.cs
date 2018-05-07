@@ -10,6 +10,7 @@ namespace C_18_01_Capstone.API.Controllers
     {
         private const string LoginIsRequired = "Login is required";
         private const string PasswordIsRequired = "Password is required";
+
         private readonly IUserService userService;
 
         public UserController(
@@ -27,8 +28,14 @@ namespace C_18_01_Capstone.API.Controllers
                 return this.BadRequest(LoginIsRequired);
             }
 
-            var result = this.Ok<UserModel>(userService.FindUser(login));
-            return result;
+            var user = userService.FindUser(login);
+
+            if(user == null)
+            {
+                return this.NotFound();
+            }
+
+            return this.Ok(user);
         }
 
         [HttpPost]
@@ -52,7 +59,7 @@ namespace C_18_01_Capstone.API.Controllers
             }
 
             this.userService.Add(
-                new Services.CreateUserModel
+                new CreateUserModel
             {
                 BirthDate = userToCreate.BirthDate,
                 CountryIsoCode3 = userToCreate.CountryId,
