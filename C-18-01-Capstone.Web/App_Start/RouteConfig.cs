@@ -16,7 +16,7 @@ namespace C_18_01_Capstone.Web
 
             routes.MapRoute(
                     name: "Profile",
-                    url: "user/{id}",
+                    url: "user/{id}/profile",
                     defaults: new { controller = "User", action = "Index" }
             );
 

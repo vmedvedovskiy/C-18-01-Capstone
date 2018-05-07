@@ -191,7 +191,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\Filters\AuthorizeUserAttribute.cs" />
-    <Compile Include="Infrastructure\Filters\CustomActionAttribute.cs" />
+    <Compile Include="Infrastructure\Filters\LogActionAttribute.cs" />
     <Compile Include="Infrastructure\Filters\HandleExceptionAttribute.cs" />
     <Compile Include="Infrastructure\SimpleInjector\ImportPropertySelectionBehavior.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -237,6 +237,10 @@
     <ProjectReference Include="..\C-18-01-Capstone.API.Contract\C-18-01-Capstone.API.Contract.csproj">
       <Project>{08f1d1e7-4d97-498f-a998-28235a11b6b2}</Project>
       <Name>C-18-01-Capstone.API.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\C-18-01-Capstone.API\C-18-01-Capstone.API.csproj">
+      <Project>{CABE2A13-5415-489A-9EC6-D480E82DA3F2}</Project>
+      <Name>C-18-01-Capstone.API</Name>
     </ProjectReference>
     <ProjectReference Include="..\C-18-01-Capstone.Services.Implementation\C-18-01-Capstone.Services.Implementation.csproj">
       <Project>{EDCCFB3D-F85E-4A24-B457-47B74B9228E1}</Project>

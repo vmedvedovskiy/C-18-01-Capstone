@@ -20,7 +20,7 @@ namespace C_18_01_Capstone.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             GlobalFilters.Filters.Add(new HandleExceptionAttribute());
-            GlobalFilters.Filters.Add(new CustomActionAttribute());
+            GlobalFilters.Filters.Add(new LogActionAttribute());
 
             var container = new Container();
 

@@ -41,8 +41,11 @@ namespace C_18_01_Capstone.Web.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult> Register()
         {
+            var x = this.apiClient.GetToken("","");
+
             var userViewModel = new UserViewModel
             {
                 BirthDate = DateTime.Now,
@@ -55,15 +58,9 @@ namespace C_18_01_Capstone.Web.Controllers
 
             return View(userViewModel);
         }
-
-        private bool TryParse(string value, out object result)
-        {
-            result = 10;
-
-            return true;
-        }
-
+        
         [HttpPost]
+        [AllowAnonymous]
         public async Task<ActionResult> Register(
             UserViewModel userViewModel)
         {
@@ -72,11 +69,11 @@ namespace C_18_01_Capstone.Web.Controllers
                 throw new ApplicationException();
             }
 
-            if(ExistUserLogin(userViewModel.Login).Result)
-            {
-                this.ModelState.AddModelError("", LoginError);
-                return View(userViewModel);
-            }
+            //if(ExistUserLogin(userViewModel.Login).Result)
+            //{
+            //    this.ModelState.AddModelError("", LoginError);
+            //    return View(userViewModel);
+            //}
             
             var hasUserCreated = await this.apiClient.CreateUser(this.Convert(userViewModel));
 
@@ -90,7 +87,6 @@ namespace C_18_01_Capstone.Web.Controllers
             return RedirectToAction("Login");
         }
         
-
         private async Task<bool> ExistUserLogin(string login)
         {
             UserModel user = await this.apiClient.GetUser(login);
