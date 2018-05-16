@@ -21,6 +21,9 @@ namespace C_18_01_Capstone.Web
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                               "~/Scripts/bootstrap.min.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/profileJs").Include(
+                              "~/Scripts/profile.js"));
+
             bundles.Add(new StyleBundle("~/bundles/css").Include(
                       "~/Content/bootstrap.css"));
 
@@ -30,7 +33,7 @@ namespace C_18_01_Capstone.Web
             bundles.Add(new StyleBundle("~/bundles/profile").Include(
                             "~/Content/profile.css"));
 
-            BundleTable.EnableOptimizations = true;
+            BundleTable.EnableOptimizations = false;
         }
     }
 }

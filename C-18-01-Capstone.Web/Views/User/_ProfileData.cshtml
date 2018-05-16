@@ -1,0 +1,16 @@
+﻿@model  C_18_01_Capstone.Services.UserModel
+
+<h4>
+  @Model.LastName @Model.FirstName
+</h4>
+<small>
+  <cite title="San Francisco, USA">
+    @Model.Country.Name, @Model.Country.CountryIsoCode3 <i class="glyphicon glyphicon-map-marker">
+    </i>
+  </cite>
+</small>
+<p>
+  <i class="glyphicon glyphicon-envelope"></i>@Model.Login
+  <br />
+  <i class="glyphicon glyphicon-gift"></i>@Model.BirthDate.Day.@Model.BirthDate.Month.@Model.BirthDate.Year
+</p>

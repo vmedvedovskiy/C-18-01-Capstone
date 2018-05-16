@@ -174,6 +174,7 @@
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
     <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\profile.js" />
     <Content Include="Scripts\register.js" />
     <Content Include="Scripts\umd\popper-utils.js" />
     <Content Include="Scripts\umd\popper-utils.min.js" />
@@ -194,6 +195,7 @@
     <Compile Include="Infrastructure\Filters\CustomActionAttribute.cs" />
     <Compile Include="Infrastructure\Filters\HandleExceptionAttribute.cs" />
     <Compile Include="Infrastructure\SimpleInjector\ImportPropertySelectionBehavior.cs" />
+    <Compile Include="Infrastructure\Token.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ApiClient.cs" />
     <Compile Include="Services\ConfigurationService.cs" />
@@ -226,6 +228,7 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Error\Error.cshtml" />
+    <Content Include="Views\User\_ProfileData.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

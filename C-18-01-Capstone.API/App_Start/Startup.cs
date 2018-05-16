@@ -61,7 +61,7 @@ namespace C_18_01_Capstone.API.App_Start
                 var options = new OAuthAuthorizationServerOptions
                 {
                     AllowInsecureHttp = true,
-                    TokenEndpointPath = new PathString("/token"),
+                    TokenEndpointPath = new PathString("/api/v1/token"),
                     AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(60),
                     Provider =
                     container.GetInstance<IOAuthAuthorizationServerProvider>()

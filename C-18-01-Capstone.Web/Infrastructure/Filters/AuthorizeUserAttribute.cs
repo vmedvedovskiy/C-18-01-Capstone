@@ -13,10 +13,7 @@ namespace C_18_01_Capstone.Web.Infrastructure.Filters
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
-            string login = (string)httpContext.Session["Login"];
-            string hashedPassword = (string)httpContext.Session["HashedPassword"];
-            
-            return true;
+            return ApiClient.IsAuthenticated;
         }
 
         protected override void HandleUnauthorizedRequest(

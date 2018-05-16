@@ -9,6 +9,7 @@ using C_18_01_Capstone.Web.Services;
 using C_18_01_Capstone.Services.Services;
 using C_18_01_Capstone.Services;
 using C_18_01_Capstone.Web.Infrastructure.Filters;
+using C_18_01_Capstone.Web.Infrastructure;
 
 namespace C_18_01_Capstone.Web.Controllers
 {
@@ -28,10 +29,22 @@ namespace C_18_01_Capstone.Web.Controllers
         }
 
         [HttpGet]
-        [AuthorizeUser]
-        public async Task<ActionResult> Index()
+        //[AuthorizeUser]
+        public async Task<ActionResult> Index(string login)
         {
-            return View();
+            //string result = await this.apiClient.CheckAuthorizedRoute();
+            //UserModel user = await apiClient.GetUser(login);
+            return View((object)login);//user);
+        }
+
+        [HttpGet]
+        public PartialViewResult GetProfileData(string login)
+        {
+            UserModel user = null;
+            var task = Task.Run(async () => { user = await apiClient.GetUser(login); });
+            task.Wait();
+
+            return PartialView("_ProfileData", user);
         }
 
         [HttpGet]
@@ -111,19 +124,9 @@ namespace C_18_01_Capstone.Web.Controllers
             string hashedPassword = encryptionService.EncryptPassword
                 (loginModel.Password, user.Salt);
 
-            if (user.HashedPassword.Equals(hashedPassword,
-                StringComparison.Ordinal))
-            {
-                HttpContext.Session["Login"] = user.Login;
-                HttpContext.Session["HashedPassword"] = user.HashedPassword;
-                // do request for token
-                // store token in session
-                // in auth attribute, check token presence
-            }
-            else
-            {
-                throw new ApplicationException();
-            }
+            await apiClient.GetAndStoreToken(loginModel.Login, hashedPassword);
+
+            return RedirectToAction("Index", new { Login = loginModel.Login });
         }
 
         private async Task<IReadOnlyList<CountryViewModel>> 
